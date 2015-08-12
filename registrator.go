@@ -23,6 +23,7 @@ var forceTags = flag.String("tags", "", "Append tags for all registered services
 var resyncInterval = flag.Int("resync", 0, "Frequency with which services are resynchronized")
 var deregister = flag.String("deregister", "always", "Deregister exited services \"always\" or \"on-success\"")
 var ignore = flag.String("ignore", "", "Comma-separated list of container names to ignore")
+var onlyExplicit = flag.Bool("only-explicit", false, "Only add containers that have explicit meta-data")
 
 func getopt(name, def string) string {
   if env := os.Getenv(name); env != "" {
@@ -70,6 +71,7 @@ func main() {
     RefreshInterval: *refreshInterval,
     DeregisterCheck: *deregister,
     Ignore:					 strings.Split(*ignore, ","),
+    OnlyExplicit:    *onlyExplicit,
   })
 
   // Start event listener before listing containers to avoid missing anything

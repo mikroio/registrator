@@ -26,6 +26,7 @@ type Config struct {
   RefreshInterval int
   DeregisterCheck string
   Ignore          []string
+  OnlyExplicit    bool
 }
 
 type Service struct {
