@@ -3,23 +3,16 @@ machine:
     - docker
 
 dependencies:
-  pre:
-    - make circleci
   override:
-    - make build
-  post:
-    - cp build/* $CIRCLE_ARTIFACTS
+    - docker build -t mikroio/registrator:$(CIRCLE_SHA1) .
 
 test:
   override:
     - /bin/true
 
 deployment:
-  master:
+  hub:
     branch: master
     commands:
-      - eval $(docker run gliderlabs/pagebuilder circleci-cmd)
-  release:
-    branch: release
-    commands:
-      - make release
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push mikroio/registrator:$CIRCLE_SHA1
