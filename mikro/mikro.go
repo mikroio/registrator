@@ -5,6 +5,7 @@ import (
   "net/url"
   "time"
   "strconv"
+  "strings"
 
   "github.com/AdRoll/goamz/aws"
   "github.com/AdRoll/goamz/dynamodb"
@@ -37,8 +38,8 @@ func (f *Factory) New(uri *url.URL) bridge.RegistryAdapter {
 
   auth, err := aws.GetAuth("", "", "", time.Now())
 
-  dbServer := dynamodb.New(auth, aws.GetRegion("eu-west-1"))
-  table := dbServer.NewTable(uri.Host, pk)
+  dbServer := dynamodb.New(auth, aws.GetRegion(uri.Host))
+  table := dbServer.NewTable(strings.TrimPrefix(uri.Path, "/"), pk)
   return &MikroAdapter{table: table}
 }
 
