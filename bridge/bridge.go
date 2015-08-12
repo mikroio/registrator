@@ -134,7 +134,7 @@ func (b *Bridge) add(containerId string, quiet bool) {
     return
   }
 
-  ignored := b.ignoreNamedContainer(container.Name)
+  ignored := b.ignoreNamedContainer(strings.TrimPrefix(container.Name, "/"))
   if ignored {
     log.Println("ignored:", container.ID[:12], "according to cmd-line")
     return
