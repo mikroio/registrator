@@ -4,7 +4,7 @@ machine:
 
 dependencies:
   override:
-    - docker build -t mikroio/registrator:$(CIRCLE_SHA1) .
+    - docker build -t mikroio/registrator:$CIRCLE_SHA1 .
 
 test:
   override:
