@@ -212,9 +212,9 @@ func (b *Bridge) newService(port ServicePort, isgroup bool) *Service {
     return nil
   }
 
-  name := mapDefault(metadata, "name", defaultName)
-  if name == defaultName && b.config.OnlyExplicit {
-    log.Println("newService ignored: not explicit!", name, defaultName)
+  name := mapDefault(metadata, "name", "")
+  if name == "" && b.config.OnlyExplicit {
+    log.Println("newService ignored: not explicit!")
     return nil
   }
 
